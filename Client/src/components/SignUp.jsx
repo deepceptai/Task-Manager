@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const URI = import.meta.env.VITE_API_URL;
 
@@ -100,9 +101,9 @@ export default function SignUpPage() {
 
                 <div className="text-center">
                   <span className="text-muted small">Already have an account? </span>
-                  <a href="#" className="text-dark text-decoration-none small">
+                  <Link to='/login' className="text-dark text-decoration-none small">
                     Sign In
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
