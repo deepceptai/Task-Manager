@@ -1,0 +1,23 @@
+commands to get your project up in GitHub
+
+step 1 :- create a repository in GitHub
+
+step 2 :- run the initialize command 
+		
+		git init
+
+step 3 :- add the files into the staging area 
+
+		git add .
+
+step 4 :- commit the changes 
+
+		git commit -m "Yours message here"
+
+step 5 :- add a origin. This defines where the code will be pushed into
+
+		git remote add origin <GitHub repository link>.git
+
+step 6 :- push the code into GitHub
+
+		git push -u origin main

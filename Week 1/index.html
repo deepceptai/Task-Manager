@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>My Tasks</h2>
+
+    <!-- Add Task Form (Static) -->
+    <div class="task-form-container mb-2">
+      <h4 class="mb-3">New Task</h4>
+      <form>
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" placeholder="Task title" required>
+
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="3" placeholder="Task description" required></textarea>
+
+        <button type="submit" class="btn-dark">Add Task</button>
+      </form>
+    </div>
+
+    <!-- Example Tasks -->
+    <div class="card">
+      <input type="checkbox" class="form-check-input" />
+      <div class="task-content">
+        <h5 class="task-title">Buy groceries</h5>
+        <p class="task-description">Milk, Bread, Eggs</p>
+        <small class="text-muted">Today</small>
+      </div>
+      <a href="#" class="btn">View</a>
+    </div>
+
+    <div class="card">
+      <input type="checkbox" class="form-check-input" checked />
+      <div class="task-content">
+        <h5 class="task-title text-decoration-line-through">Finish project</h5>
+        <p class="task-description text-decoration-line-through">Complete the frontend design</p>
+        <small class="text-muted">Today</small>
+      </div>
+      <a href="#" class="btn">View</a>
+    </div>
+  </div>
+</body>
+</html>
