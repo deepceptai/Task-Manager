@@ -16,6 +16,6 @@ exports.getUserTask = async (req, res, next) => {
     res.task = task;
     next();
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: "invalid task id" });
   }
 };
