@@ -49,58 +49,83 @@ export default function AddTask({ onTaskCreated }) {
   return (
     <>
       <div className="d-flex justify-content-center mt-4">
-        <button className="btn btn-outline-primary" onClick={toggleForm}>
+        <button className="btn btn-custom" onClick={toggleForm}>
           ➕ Add Task
         </button>
       </div>
 
-      {showForm && (
-        <div className="task-form-overlay">
-          <div className="task-form-container card shadow p-4">
-            <button
-              className="btn-close ms-auto"
-              onClick={toggleForm}
-              aria-label="Close"
-            ></button>
-            <h4 className="mb-3">New Task</h4>
-            {error && <div className="alert alert-danger">{error}</div>}
-            {success && <div className="alert alert-success">{success}</div>}
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Description</label>
-                <textarea
-                  className="form-control"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                ></textarea>
-              </div>
-              <div className="form-check mb-3">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="completedCheck"
-                  checked={completed}
-                  onChange={(e) => setCompleted(e.target.checked)}
-                />
-                <label className="form-check-label" htmlFor="completedCheck">
-                  Mark as Completed
-                </label>
-              </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Submit Task
+{showForm && (
+        <div className="modern-modal-overlay">
+          <div className="modern-modal-container">
+            <div className="modal-header">
+              <h4 className="modal-title">Create New Task</h4>
+              <button
+                className="modern-close-button"
+                onClick={toggleForm}
+                aria-label="Close"
+              >
+                ✕
               </button>
-            </form>
+            </div>
+
+            <div className="modal-body">
+              {error && (
+                <div className="modern-alert error">
+                  <span className="alert-icon">⚠️</span>
+                  {error}
+                </div>
+              )}
+              {success && (
+                <div className="modern-alert success">
+                  <span className="alert-icon">✅</span>
+                  {success}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="modern-form">
+                <div className="form-group">
+                  <label className="modern-label">Task Title</label>
+                  <input
+                    type="text"
+                    className="modern-input"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Enter task title..."
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="modern-label">Description</label>
+                  <textarea
+                    className="modern-textarea"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Describe your task..."
+                    rows={4}
+                    required
+                  ></textarea>
+                </div>
+
+                <div className="checkbox-group">
+                  <label className="modern-checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={completed}
+                      onChange={(e) => setCompleted(e.target.checked)}
+                      className="checkbox-input"
+                    />
+                    <span className="checkbox-checkmark"></span>
+                    <span className="checkbox-label">Mark as completed</span>
+                  </label>
+                </div>
+
+                <button type="submit" className="modern-submit-button">
+                  <span className="submit-icon">🚀</span>
+                  Create Task
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       )}

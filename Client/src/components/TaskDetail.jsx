@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './TaskDetails.css'
 import axios from 'axios';
 import EditTask from './EditTask';
 import DeleteTask from './DeleteTask';
@@ -44,8 +45,8 @@ export default function TaskDetail({ taskId, onClose, onTaskUpdated, onTaskDelet
   };
 
   const handleTaskDelete = () => {
-    onTaskDeleted?.(taskId); // Notify parent about deletion
-    onClose?.(); // Close modal
+    onTaskDeleted?.(taskId);
+    onClose?.();
   };
 
   if (!taskId) return null;
@@ -61,57 +62,72 @@ export default function TaskDetail({ taskId, onClose, onTaskUpdated, onTaskDelet
   }
 
   return (
-    <div
-      className="modal fade show"
-      style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
-      role="dialog"
-      onClick={onClose} // Close when clicking backdrop
-    >
-      <div 
-        className="modal-dialog modal-dialog-centered modal-lg"
-        onClick={(e) => e.stopPropagation()} // Prevent modal content from closing
-      >
-        <div className="modal-content">
+    <>
+      <div className="modern-modal-overlay" onClick={onClose}>
+        <div 
+          className="modern-modal-container"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="modal-header">
-            <h5 className="modal-title">{task?.title || 'Task Details'}</h5>
+            <h4 className="modal-title">{task?.title || 'Task Details'}</h4>
             <button 
-              type="button" 
-              className="btn-close" 
+              className="modern-close-button"
               onClick={onClose}
               aria-label="Close"
-            />
+            >
+              ✕
+            </button>
           </div>
+
           <div className="modal-body">
             {loading ? (
-              <div className="text-center">
-                <div className="spinner-border text-primary" role="status" />
-                <p>Loading task details...</p>
+              <div className="loading-container">
+                <div className="modern-spinner"></div>
+                <p className="loading-text">Loading task details...</p>
               </div>
             ) : error ? (
-              <div className="alert alert-danger">{error}</div>
+              <div className="modern-alert error">
+                <span className="alert-icon">⚠️</span>
+                {error}
+              </div>
             ) : (
-              <>
-                <p className="mb-3">{task?.description || 'No description provided'}</p>
-                <div className="mb-3">
-                  <strong>Status:</strong>{' '}
-                  <span className={`badge ${task?.completed ? 'bg-success' : 'bg-warning text-dark'}`}>
+              <div className="task-details">
+                <div className="detail-section">
+                  <h5 className="section-title">Description</h5>
+                  <p className="task-description">
+                    {task?.description || 'No description provided'}
+                  </p>
+                </div>
+
+                <div className="detail-section">
+                  <h5 className="section-title">Status</h5>
+                  <span className={`modern-badge ${task?.completed ? 'completed' : 'pending'}`}>
+                    <span className="badge-icon">
+                      {task?.completed ? '✅' : '⏳'}
+                    </span>
                     {task?.completed ? 'Completed' : 'Pending'}
                   </span>
                 </div>
-                <small className="text-muted">
-                  Last updated: {task ? new Date(task.updatedAt).toLocaleString() : 'N/A'}
-                </small>
-              </>
+
+                <div className="detail-section">
+                  <h5 className="section-title">Last Updated</h5>
+                  <p className="update-time">
+                    {task ? new Date(task.updatedAt).toLocaleString() : 'N/A'}
+                  </p>
+                </div>
+              </div>
             )}
           </div>
+
           <div className="modal-footer">
             {task && (
               <>
                 <button 
-                  className="btn btn-primary" 
+                  className="modern-action-button edit" 
                   onClick={() => setIsEditing(true)}
                   disabled={loading}
                 >
+                  <span className="button-icon">✏️</span>
                   Edit
                 </button>
                 <DeleteTask 
@@ -121,15 +137,16 @@ export default function TaskDetail({ taskId, onClose, onTaskUpdated, onTaskDelet
               </>
             )}
             <button 
-              className="btn btn-secondary" 
+              className="modern-action-button secondary" 
               onClick={onClose}
               disabled={loading}
             >
+              <span className="button-icon">↩️</span>
               Close
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

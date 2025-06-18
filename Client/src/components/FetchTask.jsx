@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import './FetchTask.css';
+import './FetchTask.css'; // External CSS
 import TaskDetail from './TaskDetail';
 
 export default function FetchTask({ tasks: initialTasks, loading, error }) {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [taskList, setTaskList] = useState(initialTasks);
 
-  // Sync local state when parent tasks change
   useEffect(() => {
     setTaskList(initialTasks);
   }, [initialTasks]);
@@ -17,34 +16,56 @@ export default function FetchTask({ tasks: initialTasks, loading, error }) {
     const updatedList = taskList.map(task =>
       task._id === updatedTask._id ? updatedTask : task
     );
-    setTaskList(updatedList); // Update local state
+    setTaskList(updatedList);
   };
 
-  // Add this to your FetchTask component
-const handleTaskDeleted = (deletedTaskId) => {
-  const updatedList = taskList.filter(task => task._id !== deletedTaskId);
-  setTaskList(updatedList);
-  setSelectedTaskId(null); // Close modal if open
-};
+  const handleTaskDeleted = (deletedTaskId) => {
+    const updatedList = taskList.filter(task => task._id !== deletedTaskId);
+    setTaskList(updatedList);
+    setSelectedTaskId(null);
+  };
 
   return (
-    <div>
+    <div className="">
       {loading ? (
-        <div className="text-center">
-          <div className="spinner-border text-primary" role="status" />
+        <div className="loading-container">
+          <div className="loading-spinner">
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+          </div>
+          <p className="loading-text">Loading your tasks...</p>
         </div>
       ) : error ? (
-        <div className="alert alert-danger text-center">{error}</div>
+        <div className="error-container">
+          <div className="error-icon">⚠️</div>
+          <div className="error-message">{error}</div>
+        </div>
       ) : taskList.length === 0 ? (
-        <div className="alert alert-info text-center">No tasks found.</div>
+        <div className="empty-state">
+          <div className="empty-icon">📝</div>
+          <h3>No tasks found</h3>
+          <p>Create your first task to get started!</p>
+        </div>
       ) : (
         <>
-          <div className="accordion" id="tasksAccordion">
+          <div className="task-header">
+            <h2>Your Tasks</h2>
+            <div className="task-stats">
+              <span className="stat completed">
+                {taskList.filter(task => task.completed).length} Completed
+              </span>
+              <span className="stat pending">
+                {taskList.filter(task => !task.completed).length} Pending
+              </span>
+            </div>
+          </div>
+
+          <div className="modern-accordion" id="tasksAccordion">
             {taskList.map((task, index) => (
-              <div className="accordion-item" key={task._id}>
-                <h2 className="accordion-header" id={`heading-${index}`}>
+              <div className="modern-accordion-item" key={task._id}>
+                <h2 className="modern-accordion-header" id={`heading-${index}`}>
                   <button
-                    className={`accordion-button ${index !== 0 ? 'collapsed' : ''}`}
+                    className={`modern-accordion-button ${index !== 0 ? 'collapsed' : ''}`}
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target={`#collapse-${index}`}
@@ -52,36 +73,36 @@ const handleTaskDeleted = (deletedTaskId) => {
                     aria-controls={`collapse-${index}`}
                     onClick={() => setSelectedTaskId(task._id)}
                   >
-                    <div className="d-flex w-100 justify-content-between align-items-center">
-                      <span>{task.title}</span>
-                      <span
-                        className={`badge ${
-                          task.completed ? 'bg-success' : 'bg-warning text-dark'
-                        }`}
-                      >
-                        {task.completed ? 'Completed' : 'Pending'}
+                    <div className="accordion-content">
+                      <div className="task-info">
+                        <div className={`task-status ${task.completed ? 'completed' : 'pending'}`}></div>
+                        <span className="task-title">{task.title}</span>
+                      </div>
+                      <span className={`modern-badge ${task.completed ? 'success' : 'warning'}`}>
+                        {task.completed ? '✓ Completed' : '⏳ Pending'}
                       </span>
                     </div>
                   </button>
                 </h2>
                 <div
                   id={`collapse-${index}`}
-                  className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
+                  className={`modern-accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
                   aria-labelledby={`heading-${index}`}
                   data-bs-parent="#tasksAccordion"
                 >
-                  <div className="accordion-body">
-                    <p>{task.description}</p>
-                    <small className="text-muted">
-                      Created on: {new Date(task.createdAt).toLocaleString()}
-                    </small>
+                  <div className="modern-accordion-body">
+                    <p className="task-description">{task.description}</p>
+                    <div className="task-meta">
+                      <span className="created-date">
+                        📅 Created: {new Date(task.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Modal for task details */}
           {selectedTaskId && (
             <TaskDetail
               taskId={selectedTaskId}

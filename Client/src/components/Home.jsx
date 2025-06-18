@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Your Tasks</h2>
+        <h2 className='text-light'>Your Tasks</h2>
         <AddTask onTaskCreated={handleAddTask} />
       </div>
       <FetchTask tasks={tasks} loading={loading} error={error} />

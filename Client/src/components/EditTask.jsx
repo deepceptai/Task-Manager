@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './AddTask.css';
+import './EditTask.css'
 
 const URI = import.meta.env.VITE_API_URL;
 
@@ -36,49 +37,81 @@ export default function EditTask({ task, onClose, onTaskUpdated }) {
     }
   };
 
-  return (
-    <div className="task-form-overlay">
-      <div className="task-form-container card shadow p-4">
-        <button className="btn-close ms-auto" onClick={onClose}></button>
-        <h4 className="mb-3">Edit Task</h4>
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Title</label>
-            <input
-              className="form-control"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
+ return (
+    <>
+      <div className="modern-modal-overlay">
+        <div className="modern-modal-container">
+          <div className="modal-header">
+            <h4 className="modal-title">Edit Task</h4>
+            <button
+              className="modern-close-button"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              ✕
+            </button>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Description</label>
-            <textarea
-              className="form-control"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
+
+          <div className="modal-body">
+            {error && (
+              <div className="modern-alert error">
+                <span className="alert-icon">⚠️</span>
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="modern-alert success">
+                <span className="alert-icon">✅</span>
+                {success}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="modern-form">
+              <div className="form-group">
+                <label className="modern-label">Task Title</label>
+                <input
+                  type="text"
+                  className="modern-input"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Enter task title..."
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="modern-label">Description</label>
+                <textarea
+                  className="modern-textarea"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Describe your task..."
+                  rows={4}
+                  required
+                ></textarea>
+              </div>
+
+              <div className="checkbox-group">
+                <label className="modern-checkbox-container">
+                  <input
+                    type="checkbox"
+                    checked={completed}
+                    onChange={(e) => setCompleted(e.target.checked)}
+                    className="checkbox-input"
+                  />
+                  <span className="checkbox-checkmark"></span>
+                  <span className="checkbox-label">Mark as completed</span>
+                </label>
+              </div>
+
+              <button type="submit" className="modern-submit-button">
+                <span className="submit-icon">💾</span>
+                Save Changes
+              </button>
+            </form>
           </div>
-          <div className="form-check mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="editCheck"
-              checked={completed}
-              onChange={(e) => setCompleted(e.target.checked)}
-            />
-            <label className="form-check-label" htmlFor="editCheck">
-              Mark as Completed
-            </label>
-          </div>
-          <button type="submit" className="btn btn-primary w-100">
-            Save Changes
-          </button>
-        </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
