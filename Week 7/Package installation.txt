@@ -1,0 +1,13 @@
+Here is how to install the packages which we will be using in this Week's Tasks
+
+    npm init -y
+
+    npm install
+
+    npm install express
+
+    npm install cors
+
+    npm install jsonwebtoken
+
+    node index.js(to run the file)
