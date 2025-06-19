@@ -1,0 +1,21 @@
+Push the Project into github just like we did earlier 
+
+    git init
+    git add .
+    git commit -m "Week 6 - Task Manager"
+    git branch -M main
+    git remote add origin <link>.git
+    git push -u origin main
+
+Go to your GitHub repository
+
+Click Settings → Pages
+
+Under Source, select:
+
+    Branch: main / folder: root
+
+GitHub will give you a link like:
+
+    https://your-username.github.io/task-manager/
+
