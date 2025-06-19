@@ -13,7 +13,7 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
 // MongoDB Connection (direct URI without .env)
-mongoose.connect('mongodb+srv://venkateshrayudu10:Vrayudu@cluster0.0cjxxg5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://admin:yourpassword123@cluster0.mongodb.net/?retryWrites=true&w=majority')
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB error:', err));
 
